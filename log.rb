@@ -25,14 +25,14 @@ module Irclog
           log[:type] = "ACTION"
           log[:nick] = $1
           log[:content] = $2
-        when /<\S+:(\S+?)> (.*)/
+        when /(<|>)\S+:(\S+?)(>|<) (.*)/
           log[:type] = "PRIVMSG"
-          log[:nick] = $1
-          log[:content] = $2
-        when /\(\S+:(\S+?)\) (.*)/
+          log[:nick] = $2
+          log[:content] = $4
+        when /(\(|\))\S+:(\S+?)(\)|\() (.*)/
           log[:type] = "NOTICE"
-          log[:nick] = $1
-          log[:content] = $2
+          log[:nick] = $2
+          log[:content] = $4
         when /\+ (\S+) \(\S+\) to \S+/
           log[:type] = "JOIN"
           log[:nick] = $1
@@ -74,7 +74,7 @@ module Irclog
         if log[:content]
           text = CGI.escapeHTML(log[:content])
           text = ConvertControlChar.new(text).convert
-          text = text.gsub(URI.regexp(["http", "https"]), "<a href=\"\\0\">\\0</a>")
+          text = text.gsub(URI.regexp(["http", "https"]), "<a target=\"_blank\" href=\"\\0\">\\0</a>")
           log[:content] = text
         end
       end
