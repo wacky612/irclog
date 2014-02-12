@@ -74,7 +74,7 @@ module Irclog
         if log[:content]
           text = CGI.escapeHTML(log[:content])
           text = ConvertControlChar.new(text).convert
-          text = text.gsub(URI.regexp(["http", "https"]), "<a href=\"\\0\">\\0</a>")
+          text = text.gsub(URI.regexp(["http", "https"]), "<a target=\"_blank\" href=\"\\0\">\\0</a>")
           log[:content] = text
         end
       end
