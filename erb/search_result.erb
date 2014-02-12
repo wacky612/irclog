@@ -1,0 +1,10 @@
+% require 'cgi'
+% if date_array.empty?
+    <%= keyword %>を含むログは見つかりませんでした。
+% else
+    <ul>
+%     date_array.each do |date|
+        <li><a href="?channel=<%= CGI.escape(channel) %>&amp;date=<%= date %>&amp;keyword=<%= CGI.escape(keyword) %>"><%= date %></a></li>
+%     end
+    </ul>
+% end

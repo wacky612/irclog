@@ -1,0 +1,237 @@
+body {
+    background-color: #EEEEEE;
+}
+
+h1 {
+    border-left: solid 25px pink;
+    padding: 0px 8px;
+    margin: 16px 0px;
+}
+
+h2 {
+    border-left: solid 20px pink;
+    padding: 0px 8px;
+    margin: 16px 0px;
+}
+
+h3 {
+    color: gray;
+    margin: 4px 0px;
+}
+
+tr {
+    vertical-align: top;
+}
+
+td {
+    font-family: monospace;
+    padding: 2px 5px;
+}
+
+td.nick {
+    text-align: right;
+    border-right: solid 2px black;
+    width: 5.5em;
+}
+
+td.time {
+    width: 4em;
+}
+
+td.day {
+    color: olive;
+}
+
+td.night {
+    color: navy;
+}
+
+td.content {
+    max-width: 50em;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+td.notice {
+    color: gray;
+}
+
+td.action {
+    color: green;
+}
+
+td.op {
+    color: blue;
+}
+
+td.deop {
+    color: red;
+}
+
+td.join {
+    color: blue;
+}
+
+td.part {
+    color: red;
+}
+
+td.newnick {
+    color: green;
+}
+
+td.kick {
+    color: red;
+}
+
+td.topic {
+    color: green;
+}
+
+span.white {
+    color: white;
+}
+
+span.black {
+    color: black;
+}
+
+span.darkblue {
+    color: navy;
+}
+
+span.darkgreen {
+    color: green;
+}
+
+span.red {
+    color: red;
+}
+
+span.darkred {
+    color: brown;
+}
+
+span.darkpurple {
+    color: purple;
+}
+
+span.orange {
+    color: darkorange;
+}
+
+span.yellow {
+    color: darkgoldenrod;
+}
+
+span.green {
+    color: limegreen;
+}
+
+span.darkcyan {
+    color: darkcyan;
+}
+
+span.cyan {
+    color: deepskyblue;
+}
+
+span.blue {
+    color: blue;
+}
+
+span.purple {
+    color: fuchsia;
+}
+
+span.darkgray {
+    color: dimgray;
+}
+
+span.gray {
+    color: gray;
+}
+
+span.bgwhite {
+    background-color: #EEEEEE;
+}
+
+span.bgblack {
+    background-color: black;
+}
+
+span.bgdarkblue {
+    background-color: navy;
+}
+
+span.bgdarkgreen {
+    background-color: green;
+}
+
+span.bgred {
+    background-color: red;
+}
+
+span.bgdarkred {
+    background-color: brown;
+}
+
+span.bgdarkpurple {
+    background-color: purple;
+}
+
+span.bgorange {
+    background-color: darkorange;
+}
+
+span.bgyellow {
+    background-color: darkgoldenrod;
+}
+
+span.bggreen {
+    background-color: limegreen;
+}
+
+span.bgdarkcyan {
+    background-color: darkcyan;
+}
+
+span.bgcyan {
+    background-color: deepskyblue;
+}
+
+span.bgblue {
+    background-color: blue;
+}
+
+span.bgpurple {
+    background-color: fuchsia;
+}
+
+span.bgdarkgray {
+    background-color: dimgray;
+}
+
+span.bggray {
+    background-color: gray;
+}
+
+span.u {
+    text-decoration: underline;
+}
+
+span.bold {
+    font-weight: bold;
+}
+
+span.olive {
+    color: olive;
+}
+
+span.maroon {
+    color: maroon;
+}
+
+span.royalblue {
+    color: royalblue;
+}

@@ -1,0 +1,20 @@
+% require 'date'
+% require 'time'
+% require 'cgi'
+<h2>
+  <a href="?channel=<%= CGI.escape(channel) %>&amp;date=<%= date.strftime("%Y.%m.%d") %>"><%= channel_name %></a>
+&nbsp;
+% day = Date.today - date
+% if day < 31
+%   second = Time.now - time
+%   if second < 60
+      <%= (second).to_i %>秒前
+%   elsif second < 3600
+      <%= (second / 60).to_i %>分前
+%   elsif second < 3600 * 24
+      <%= (second / 3600).to_i %>時間前
+%   else
+      <%= day.to_i %>日前
+%   end
+% end
+</h2>

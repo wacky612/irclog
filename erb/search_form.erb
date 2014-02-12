@@ -1,0 +1,20 @@
+% require 'date'
+  <form>
+    <select name="year">
+%     for y in 2000..Date.today.year do
+%       selected = ""
+%       selected = " selected=\"selected\"" if y.to_s == selected_year
+        <option value="<%= y %>"<%= selected %>><%= y %>年</option>
+%     end
+    </select>
+    <select name="channel">
+%     channel_list.each do |channel|
+%       selected = ""
+%       selected = " selected=\"selected\"" if channel.first == selected_channel
+        <option value="<%= channel.first %>"<%= selected %>><%= channel.last %></option>
+%     end
+    </select>
+    <input type="text" name="keyword" size="40">
+    <button type="submit">検索</button>
+  </form><br>
+

@@ -1,0 +1,23 @@
+module Irclog
+  module Config
+    LOG_DIR = "/path/to/tiarra/log"
+    CGI_NAME = "Irclog"
+    CHANNEL_LIST = [
+                    ["channel1_dirname", "alias1"],
+                    ["channel2_dirname", "alias2"]
+                   ]
+    LOG_FILTER = [
+                  "PRIVMSG",
+                  "NOTICE",
+                  "ACTION",
+                  "DEOP",
+                  "KICK",
+                  "TOPIC"
+                  # "JOIN",
+                  # "PART",
+                  # "NICK",
+                  # "OP"
+                 ]
+    LIST_LOG_LENGTH = 10
+  end
+end

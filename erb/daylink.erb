@@ -1,0 +1,16 @@
+% require 'date'
+% require 'cgi'
+% today = Date.today
+<a href="?channel=<%= CGI.escape(channel) %>&amp;date=<%= (date - 7).strftime("%Y.%m.%d") %>">&lt;&lt;一週間前</a>
+<a href="?channel=<%= CGI.escape(channel) %>&amp;date=<%= (date - 1).strftime("%Y.%m.%d") %>">&lt;前の日</a>
+% if date + 1 <= today
+<a href="?channel=<%= CGI.escape(channel) %>&amp;date=<%= (date + 1).strftime("%Y.%m.%d") %>">次の日&gt;</a>
+% else
+次の日&gt;
+% end
+% if date + 7 <= today
+<a href="?channel=<%= CGI.escape(channel) %>&amp;date=<%= (date + 7).strftime("%Y.%m.%d") %>">一週間後&gt;&gt;</a><br>
+% else
+一週間後&gt;&gt;<br>
+% end
+<a href="./">一覧</a><br>
