@@ -85,6 +85,12 @@ module Irclog
       logs.each do |log|
         if log[:content]
           log[:content].gsub!(Regexp.new(keyword), "<mark>\\0</mark>")
+          # <a href...>内の <mark> を取り除く
+          log[:content].gsub!(/(<a.*(<mark>(.*)<\/mark>).*\">)(.*<\/a>)/) do |url|
+            msg = $4
+            link = $1.gsub($2, $3)
+            url = link + msg
+          end
         end
       end
       return logs
