@@ -115,15 +115,15 @@ module Irclog
 
     def grep(channel, keyword, year)
       ans = []
-      privmsg = /\d\d:\d\d:\d\d <.+:\*\.jp:.+?> (.*)/
-      notice = /\d\d:\d\d:\d\d \(.+:\*\.jp:.+?\) (.*)/
+      privmsg = /\d\d:\d\d:\d\d (<|>).+:\*\.jp:.+?(>|<) (.*)/
+      notice = /\d\d:\d\d:\d\d (\(|\)).+:\*\.jp:.+?(\)|\() (.*)/
       Dir.chdir("#{Config::LOG_DIR}/#{channel}") do
         Dir.glob("#{year}.*.txt") do |file|
           log = File.read(file)
           log = NKF.nkf("-w", log)
           log.each_line do |line|
             if line =~ privmsg || line =~ notice
-              if $1 =~ Regexp.new(keyword)
+              if $3 =~ Regexp.new(keyword)
                 ans << file.scan(/\d{4}.\d\d.\d\d/)[0]
                 break
               end
