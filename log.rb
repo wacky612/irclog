@@ -85,6 +85,12 @@ module Irclog
       logs.each do |log|
         if log[:content]
           log[:content].gsub!(Regexp.new(keyword), "<mark>\\0</mark>")
+          # <a href...>内の <mark> を取り除く
+          log[:content].gsub!(/(<a.*(<mark>(.*)<\/mark>).*\">)(.*<\/a>)/) do |url|
+            msg = $4
+            link = $1.gsub($2, $3)
+            url = link + msg
+          end
         end
       end
       return logs
@@ -115,15 +121,15 @@ module Irclog
 
     def grep(channel, keyword, year)
       ans = []
-      privmsg = /\d\d:\d\d:\d\d <.+:\*\.jp:.+?> (.*)/
-      notice = /\d\d:\d\d:\d\d \(.+:\*\.jp:.+?\) (.*)/
+      privmsg = /\d\d:\d\d:\d\d (<|>).+:\*\.jp:.+?(>|<) (.*)/
+      notice = /\d\d:\d\d:\d\d (\(|\)).+:\*\.jp:.+?(\)|\() (.*)/
       Dir.chdir("#{Config::LOG_DIR}/#{channel}") do
         Dir.glob("#{year}.*.txt") do |file|
           log = File.read(file)
           log = NKF.nkf("-w", log)
           log.each_line do |line|
             if line =~ privmsg || line =~ notice
-              if $1 =~ Regexp.new(keyword)
+              if $3 =~ Regexp.new(keyword)
                 ans << file.scan(/\d{4}.\d\d.\d\d/)[0]
                 break
               end
