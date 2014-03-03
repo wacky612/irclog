@@ -21,43 +21,43 @@ module Irclog
         log = {}
         log[:time] = Time.parse(date_str + " " + line[0..7])
         case line[9..-1]
-        when /<\S+:(\S+?)> \cAACTION (.*)\cA/
+        when /^<\S+:(\S+?)> \cAACTION (.*)\cA$/
           log[:type] = "ACTION"
           log[:nick] = $1
           log[:content] = $2
-        when /(<|>)\S+:(\S+?)(>|<) (.*)/
+        when /^(<|>)\S+:(\S+?)(>|<) (.*)$/
           log[:type] = "PRIVMSG"
           log[:nick] = $2
           log[:content] = $4
-        when /(\(|\))\S+:(\S+?)(\)|\() (.*)/
+        when /^(\(|\))\S+:(\S+?)(\)|\() (.*)$/
           log[:type] = "NOTICE"
           log[:nick] = $2
           log[:content] = $4
-        when /\+ (\S+) \(\S+\) to \S+/
+        when /^\+ (\S+) \(\S+\) to \S+$/
           log[:type] = "JOIN"
           log[:nick] = $1
-        when /! (\S+) \(Quit: (.+)\)/
+        when /^! (\S+) \(Quit: (.+)\)$/
           log[:type] = "PART"
           log[:nick] = $1
           log[:content] = $2
-        when /My nick is changed \((\S+) -> (\S+)\)/, /(\S+) -> (\S+)/
+        when /^My nick is changed \((\S+) -> (\S+)\)$/, /^(\S+) -> (\S+)$/
           log[:type] = "NICK"
           log[:nick] = $1
           log[:new_nick] = $2
-        when /Mode by (\S+): \S+ \+o (\S+)/
+        when /^Mode by (\S+): \S+ \+o (\S+)$/
           log[:type] = "OP"
           log[:nick] = $1
           log[:target] = $2
-        when /Mode by (\S+): \S+ -o (\S+)/
+        when /^Mode by (\S+): \S+ -o (\S+)$/
           log[:type] = "DEOP"
           log[:nick] = $1
           log[:target] = $2
-        when /- (\S+) by (\S+) from \S+ \((.+)\)/
+        when /^- (\S+) by (\S+) from \S+ \((.+)\)$/
           log[:type] = "KICK"
           log[:target] = $1
           log[:nick] = $2
           log[:reason] = $3
-        when /Topic of channel \S+ by (\S+?): (.+)/
+        when /^Topic of channel \S+ by (\S+?): (.+)$/
           log[:type] = "TOPIC"
           log[:nick] = $1
           log[:content] = $2
