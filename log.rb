@@ -15,6 +15,10 @@ module Irclog
       date_str = date.strftime("%Y.%m.%d")
       log_text = File.read("#{Config::LOG_DIR}/#{channel}/#{date_str}.txt")
       log_text.force_encoding(NKF.guess(log_text))
+      # UTF-8 として invalid な文字を消す
+      if log_text.encoding == Encoding::UTF_8
+        log_text = log_text.encode("UTF-16BE", "UTF-8", :invalid => :replace, :undef => :replace, :replace => '').encode("UTF-8")
+      end
       # NKFが\cOを消してしまうのでいったん別の文字にする
       log_text = NKF.nkf("-w", log_text.gsub(/\cO/, "\cZ")).gsub(/\cZ/, "\cO")
       log_text.each_line do |line|
