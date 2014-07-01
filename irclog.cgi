@@ -46,10 +46,13 @@ module Irclog
         ans << @view.search(@channel, @keyword, @year)
       elsif @channel && @date && @json == "true"
         ans << json_http_header
-        ans <<  @view.json(@channel, @date)
+        ans << @view.json(@channel, @date)
       elsif @channel && @date
         ans << html_http_header
-        ans <<  @view.daylog(@channel, @date, @keyword)
+        ans << @view.daylog(@channel, @date, @keyword)
+      elsif @channel
+        ans << html_http_header
+        ans << @view.channellog(@channel)
       else
         ans << html_http_header
         ans << @view.listlog

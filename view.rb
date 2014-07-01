@@ -41,33 +41,34 @@ module Irclog
       return html(body)
     end
 
+    def channellog(channel)
+      channel_array = Config::CHANNEL_LIST.assoc(channel)
+      daylogs = get_daylogs(channel, 200)
+
+      body = page_header(Config::CGI_NAME)
+      body << log_header(channel, daylogs.last[:date], daylogs.last[:log].last[:time])
+      body << search_form(channel)
+      if !daylogs.empty?
+        body << log(daylogs)
+      else
+        body << "このチャンネルは30日間発言がありませんでした。<br>"
+      end
+      return html(body)
+    end
+
     def listlog
       body = page_header(Config::CGI_NAME)
       channel_logs = []
       channels = []
+      today = Date.today
+
       Config::CHANNEL_LIST.each do |array|
         channels << array[0]
       end
+
       channels.each do |channel|
         channel_log = {}
-        daylogs = []
-        today = Date.today
-        logs_length = 0
-        for d in 0..30 do
-          if @log.exist?(channel, today - d)
-            daylog = {}
-            logs = @log.tail(@log.filter(@log.parse(channel, today - d),
-                                         Config::LOG_FILTER),
-                             Config::LIST_LOG_LENGTH - logs_length)
-            if !logs.empty?
-              daylog[:log] = @log.convert_logs(logs)
-              daylog[:date] = today - d
-              daylogs.insert(0, daylog)
-              logs_length = logs_length + daylog[:log].length
-            end
-          end
-          break if logs_length == Config::LIST_LOG_LENGTH
-        end
+        daylogs = get_daylogs(channel, Config::LIST_LOG_LENGTH)
 
         if !daylogs.empty?
           channel_log[:date] = daylogs.last[:date]
@@ -83,6 +84,7 @@ module Irclog
           channel_log[:text] << search_form(channel)
           channel_log[:text] << "このチャンネルは30日間発言がありませんでした。<br>"
         end
+
         channel_logs << channel_log
       end
 
@@ -161,5 +163,28 @@ module Irclog
       channel_list = Config::CHANNEL_LIST
       return erb("search_form.erb").result(binding)
     end
+
+    def get_daylogs(channel, length)
+      daylogs = []
+      today = Date.today
+      logs_length = 0
+      for d in 0..30 do
+        if @log.exist?(channel, today - d)
+          daylog = {}
+          logs = @log.tail(@log.filter(@log.parse(channel, today - d),
+                                       Config::LOG_FILTER),
+                           length - logs_length)
+          if !logs.empty?
+            daylog[:log] = @log.convert_logs(logs)
+            daylog[:date] = today - d
+            daylogs.insert(0, daylog)
+            logs_length = logs_length + daylog[:log].length
+          end
+        end
+        break if logs_length == length
+      end
+      return daylogs
+    end
+
   end
 end
